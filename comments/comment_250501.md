@@ -9,9 +9,7 @@
 
 ---
 
-## 수정점
-
-### User DB
+## User DB
 
 | 항목            | 수정 제안                                                                 |
 |-----------------|--------------------------------------------------------------------------|
@@ -24,7 +22,7 @@
 
 ---
 
-### API Requests Detail
+## API Requests Detail
 
 - `/api/users`  
   → request body에 `email`, `name`, `phone`, `student_id`가 포함되면 좋겠습니다. 유저를 생성할 때 필수적으로 필요한 정보니까요. 그리고 url 경로가 바뀌었으면 좋겠습니다 다른 url 경로들에 포함되므로.
@@ -45,7 +43,7 @@
 
 ---
 
-### API Requests General
+## API Requests General
 
 - REST 방식으로 다음 **3가지 method만 사용**해주세요:  
   - `GET` → 정보 조회  

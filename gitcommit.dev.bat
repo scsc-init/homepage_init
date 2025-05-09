@@ -1,4 +1,5 @@
 @echo off
-set /p commit_message="Commit message: "
+for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyMMdd"') do set commit_message=%%i
+echo Commit message: %commit_message%
 git add .
 git commit -m "%commit_message%"

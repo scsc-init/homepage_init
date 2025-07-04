@@ -31,6 +31,7 @@
 - 관련 정보는 `page.jsx`에서 로드하고 로드한 정보를 매개변수로 넘기는 방식으로 작성해주세요.
 - `ScscStatusPanel`의 `${getBaseUrl()}/api/executive/scsc/global/status`의 경우에, FE 서버에서 별도로 `@/app/api/executive/scsc/global/status/route.js` 같은걸 만들어서, 거기에서 요청을 날리도록 만듭시다. 그러니까 FE 웹페이지 > FE 서버 route.js > BE Main 서버 형태로 가는것.
 - 마찬가지로 `CreateBoardArticleClient` 페이지에서 BE Main 서버로 바로 Fetch 하는데, 별도의 `@/app/api/article/create/route.js` 같은 걸 만들어서, 거기에서 요청을 날리도록 만듭시다.
+- 확인해보고 비슷한거 있으면 바꿉시다.
 - 이것뿐만 아니라, 앞으로도 이제 FE 브라우저 페이지에서 BE Main으로 바로 쏘는 요청은 FE 서버를 한 번 거치게 만들겁니다. 참고해주세요
 
 ### Bot 서버 짜잘한 것

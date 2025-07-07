@@ -18,6 +18,8 @@ services:
     build: ./homepage_init_backend
     ports:
       - "8080:8080"
+    networks:
+      - app-net
     env_file:
       - ./homepage_init_backend/.env
     volumes:
@@ -51,6 +53,8 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    networks:
+      - app-net
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -61,6 +65,10 @@ services:
       retries: 5
   bot:
     build: ./homepage_init_bot
+    ports:
+      - "8081:8081"
+    networks:
+      - app-net
     env_file:
       - ./homepage_init_bot/.env
     volumes:
@@ -68,11 +76,21 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - app-net
+networks:
+  app-net:
+
 ```
 
 ### `.env` contents
 
 #### `./.env`
+Required when executing `docker-compose.yml` at root. The file location is relative to `./homepage_init_backend/`, i.e. it must be the same variable declared as below in `./homepage_init_backend/.env`.
 
 ```
 SQLITE_FILENAME="db/YOUR_DB_FILENAME.db"
@@ -80,14 +98,33 @@ SQLITE_FILENAME="db/YOUR_DB_FILENAME.db"
 
 #### `./homepage_init_backend/.env`
 
-same as original repo
+```
+API_SECRET="some-secret-code"
+JWT_SECRET="some-session-secret"
+JWT_VALID_SECONDS=3600
+SQLITE_FILENAME="db/YOUR_DB_FILENAME.db"
+IMAGE_DIR="static/image/photo/"
+IMAGE_MAX_SIZE=10000000
+FILE_DIR="download/"
+FILE_MAX_SIZE=10000000
+ARTICLE_DIR="static/article/"
+USER_CHECK=FALSE
+ENROLLMENT_FEE=300000
+CORS_ALL_ACCEPT=FALSE
+RABBITMQ_HOST="rabbitmq"
+REPLY_QUEUE="main_response_queue"
+DISCORD_RECEIVE_QUEUE="discord_bot_queue"
+```
 
 #### `./homepage_init_bot/.env`
 
 ```
 RABBITMQ_HOST="rabbitmq"
-TOKEN="YOUR_BOT_TOKEN"
+MAIN_BACKEND_HOST="backend"
+DISCORD_RECEIVE_QUEUE="discord_bot_queue"
+TOKEN="your-discord-bot-token"
 COMMAND_PREFIX="!"
+API_SECRET="some-secret-code"
 ```
 
 ### Running
